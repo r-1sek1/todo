@@ -1,10 +1,14 @@
 import type { NextConfig } from "next";
 
+// GitHub Pages デプロイ時のみ静的エクスポート設定を適用
+const isGHPages = process.env.GHPAGES === 'true';
+
 const nextConfig: NextConfig = {
-  output: "export",
-  // GitHub Pages のリポジトリ名に合わせたbasePath
-  basePath: process.env.GHPAGES ? "/todo" : "",
-  images: { unoptimized: true },
+  ...(isGHPages && {
+    output: "export",
+    basePath: "/todo",
+    images: { unoptimized: true },
+  }),
 };
 
 export default nextConfig;
