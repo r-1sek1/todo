@@ -17,7 +17,6 @@ export function AddTodoForm({ onAdd }: Props) {
   const [text, setText] = useState('');
   const [priority, setPriority] = useState<Priority>('medium');
   const [dueDate, setDueDate] = useState('');
-  const [showOptions, setShowOptions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,7 +26,6 @@ export function AddTodoForm({ onAdd }: Props) {
     setText('');
     setDueDate('');
     setPriority('medium');
-    setShowOptions(false);
     inputRef.current?.focus();
   };
 
@@ -39,10 +37,8 @@ export function AddTodoForm({ onAdd }: Props) {
           type="text"
           value={text}
           onChange={e => setText(e.target.value)}
-          onFocus={() => setShowOptions(true)}
           placeholder="新しいタスクを入力..."
           className="flex-1 px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-          autoFocus
         />
         <button
           type="submit"
@@ -53,37 +49,35 @@ export function AddTodoForm({ onAdd }: Props) {
         </button>
       </div>
 
-      {showOptions && (
-        <div className="flex flex-wrap items-center gap-3 px-1">
-          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">優先度:</span>
-          <div className="flex gap-1">
-            {PRIORITIES.map(p => (
-              <button
-                key={p.value}
-                type="button"
-                onClick={() => setPriority(p.value)}
-                className={`px-3 py-1 text-xs font-semibold rounded-full border transition-all ${
-                  priority === p.value
-                    ? p.color
-                    : 'text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:text-slate-500'
-                }`}
-              >
-                {p.label}
-              </button>
-            ))}
-          </div>
-          <div className="flex items-center gap-2 ml-auto">
-            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">期日:</span>
-            <input
-              type="date"
-              value={dueDate}
-              onChange={e => setDueDate(e.target.value)}
-              min={new Date().toISOString().split('T')[0]}
-              className="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-            />
-          </div>
+      <div className="flex flex-wrap items-center gap-3 px-1">
+        <span className="text-xs font-medium text-slate-500 dark:text-slate-400">優先度:</span>
+        <div className="flex gap-1">
+          {PRIORITIES.map(p => (
+            <button
+              key={p.value}
+              type="button"
+              onClick={() => setPriority(p.value)}
+              className={`px-3 py-1 text-xs font-semibold rounded-full border transition-all ${
+                priority === p.value
+                  ? p.color
+                  : 'text-slate-400 border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:text-slate-500'
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
         </div>
-      )}
+        <div className="flex items-center gap-2 ml-auto">
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">期日:</span>
+          <input
+            type="date"
+            value={dueDate}
+            onChange={e => setDueDate(e.target.value)}
+            min={new Date().toISOString().split('T')[0]}
+            className="text-xs px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+          />
+        </div>
+      </div>
     </form>
   );
 }

@@ -58,10 +58,8 @@ describe('AddTodoForm', () => {
     expect(onAdd).not.toHaveBeenCalled();
   });
 
-  it('フォーカス時に優先度と期日のオプションが表示される', async () => {
-    const user = userEvent.setup();
+  it('優先度と期日のオプションが初期表示から表示される', () => {
     render(<AddTodoForm onAdd={jest.fn()} />);
-    await user.click(screen.getByPlaceholderText('新しいタスクを入力...'));
     expect(screen.getByText('優先度:')).toBeInTheDocument();
     expect(screen.getByText('期日:')).toBeInTheDocument();
   });
